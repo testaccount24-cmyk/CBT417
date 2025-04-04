@@ -1,0 +1,173 @@
+*---------------------------------------------------------------------*
+*                          RACFADM - Panels                           *
+*---------------------------------------------------------------------*
+
+  Member      Subject                   Description
+ --------  -------------  --------------------------------------------
+ $$DIR     Directory      Document members
+ $CLASSES  Information    Document general resource classes
+ $DEFSETG  Settings       Default site settings for new users
+ $GLOSSRY  TSO Help       Technical terms and abbreviations for RACF
+ $REPORTS  Reports        ICETOOL/DSMON reports
+ $STNDARD  Standards      Document coding and design
+ $UNDOC    Commands       Undocumented User Profile primary commands
+ $UPDATES  Updates        Document version/updates
+ #RACACC   Tutorial       DSN/Resource Access Report
+ #RACACKN  Tutorial       Acknowledgements
+ #RACAMTC  Tutorial       OMVS Home Directory Automount Check
+ #RACCERA  Tutorial       Add new certificate
+ #RACCERG  Tutorial       Generate a Digital Certificate
+ #RACCERT  Tutorial       Digital certificates
+ #RACCLSA  Tutorial       Add/Change class profile
+ #RACCLSF  Class          List group/ids and access (SEarch, Option 1)
+ #RACCLSR  Tutorial       List classes (show, refresh)
+ #RACCLS2  Tutorial       List classes
+ #RACCLS5  Tutorial       List classes
+ #RACCLS8  Tutorial       List classes
+ #RACCMDS  Tutorial       Execute, save and delete TSO commands
+ #RACCOPU  Tutorial       Clone a User Profile, (line cmd K)
+ #RACDB    Tutorial       RACF database information
+ #RACDSL   Tutorial       Dataset list
+ #RACDSNA  Tutorial       Add/change dataset profile
+ #RACDSN2  Tutorial       Dataset profile
+ #RACDSN5  Tutorial       Dataset's group/id profile
+ #RACDSN8  Tutorial       Dataset profile
+ #RACENQ   Tutorial       Enqueue information
+ #RACERA   History        Nico Rizzuto's original menu for ERA
+ #RACFPP   Tutorial       Word or Phrase Report
+ #RACGEN1  Tutorial       Generate profile source
+ #RACGRP5  Tutorial       Group's userids profiles
+ #RACGRP8  Tutorial       Group profile
+ #RACGRP9  Tutorial       Group profile
+ #RACGTRE  Tutorial       Group tree report
+ #RACHEL1  Tutorial       RACF help commands (1 of 2)
+ #RACHEL2  Tutorial       RACF help commands (2 of 2)
+ #RACHIST  Tutorial       RACF history (Nico Rizzuto's ERA)
+ #RACIBM   Tutorial       RACF IBM option
+ #RACLOG   Tutorial       ISPF log file
+ #RACMACS  Tutorial       LC and LR edit macros
+ #RACMENU  Tutorial       Main menu, menu option T
+ #RACMEN1  Tutorial       Menu
+ #RACMVS   Tutorial       RACF data (Showmvs)
+ #RACMSG   Tutorial       RACF messages
+ #RACMSGU  Tutorial       User Profile (/ line command)
+ #RACNOT1  Tutorial       Installation notes (1 of 3)
+ #RACNOT2  Tutorial       Installation notes (2 of 3)
+ #RACNOT3  Tutorial       Installation notes (3 of 3)
+ #RACOMA1  Tutorial       OMVS ORALTER (1 of 2)
+ #RACOMA2  Tutorial       OMVS ORALTER (2 of 2)
+ #RACOMF1  Tutorial       OMVS FLIST   (1 of 2)
+ #RACOMF2  Tutorial       OMVS FLIST   (2 of 2)
+ #RACOMG1  Tutorial       OMVS GLIST   (1 of 2)
+ #RACOMG2  Tutorial       OMVS GLIST   (2 of 2)
+ #RACOML1  Tutorial       OMVS ORLIST  (1 of 2)
+ #RACOML2  Tutorial       OMVS ORLIST  (2 of 2)
+ #RACOMP1  Tutorial       OMVS OPERMIT (1 of 2)
+ #RACOMP2  Tutorial       OMVS OPERMIT (2 of 2)
+ #RACOMS1  Tutorial       OMVS SLIST   (1 of 2)
+ #RACOMS2  Tutorial       OMVS SLIST   (2 of 2)
+ #RACOMU1  Tutorial       OMVS ULIST   (1 of 2)
+ #RACOMU2  Tutorial       OMVS ULIST   (2 of 2)
+ #RACOMVS  Tutorial       OMVS commands
+ #RACPRMS  Tutorial       RACF parameters
+ #RACPSWD  Tutorial       Password reset
+ #RACPSWH  Tutorial       Password/Phrase clear history
+ #RACPUB1  Tutorial       RACF publications and downloads (1 of 2)
+ #RACPUB2  Tutorial       RACF educational websites (2 of 2)
+ #RACRING  Tutorial       Digital rings
+ #RACRPT1  Tutorial       RACF reports (1 of 2)
+ #RACRPT2  Tutorial       RACF reports (2 of 2)
+ #RACRUN   Tutorial       User profile (Edit macro to run RACF commands)
+ #RACSET1  Tutorial       Settings - Customize options (1 of 4)
+ #RACSET2  Tutorial       Settings - Customize options (2 of 4)
+ #RACSET3  Tutorial       Settings - Customize options (3 of 4)
+ #RACSET4  Tutorial       Settings - Customize options (4 of 4)
+ #RACUSR2  Tutorial       User profile
+ #RACUSR3  Tutorial       User profile
+ #RACUSR5  Tutorial       User profile
+ #RACUS5A  Tutorial       User profile
+ #RACUSR6  Tutorial       User profile
+ OPERMIT   TSO Help       Unix Access Control List, like PERMIT
+ ORALTER   TSO Help       Unix Security Attribute, like ALTER
+ ORLIST    TSO Help       Unix Dir/File Security, like RLIST
+ RACFACC   User/Group     DSN/Resource Access Report Prompt (pop-up)
+ RACFAMTC  User           OMVS Home Directory Automount Check
+ RACFCERA  Certificates   Add new certificate
+ RACFCERG  Certificates   Generate a Digital Certificate
+ RACFCERT  Certificates   Digital certificates, menu opt CA
+ RACFCLSB  Class          List members
+ RACFCLSC  Class          Add class
+ RACFCLSD  Class          List class profiles
+ RACFCLSE  Class          Enter profile/class/user, menu opt 99 (hidden)
+ RACFCLSF  Class          List group/ids and access (SEarch, Option 1)
+ RACFCLSR  Class          List classes (show, refresh), menu option 4
+ RACFCLS1  Class          Set filter
+ RACFCLS2  Class          List profiles and descriptions
+ RACFCLS3  Class          Add class
+ RACFCLS4  Class          Change class
+ RACFCLS5  Class          List group/ids and access
+ RACFCLS6  Class          Change access
+ RACFCLS7  Class          Add access
+ RACFCLS8  Class          List classes and profiles
+ RACFCMDS  Commands       Execute TSO RACF commands
+ RACFCOPU  User           Clone a User Profile, (line cmd K)
+ RACFDISP  Display        GrpTree/RACFdb/Enque/Chgs/Issues/ISPLog/Stds
+ RACFDSC5  Dataset        Show groups and access (Conditional)
+ RACFDSC6  Dataset        Change access (Conditional)
+ RACFDSC7  Dataset        Add access (Conditional)
+ RACFDSN1  Dataset        Set filter, menu option 3
+ RACFDSN2  Dataset        List profiles and types
+ RACFDSN3  Dataset        Add profile
+ RACFDSN4  Dataset        Change profile
+ RACFDSN5  Dataset        Show groups and access
+ RACFDSN6  Dataset        Change access
+ RACFDSN7  Dataset        Add access
+ RACFDSN8  Dataset        Alter selected dataset segments
+ RACFEXP   Certificates   Certificate Export DSN
+ RACFGEN1  Generate       Generate profile source
+ RACFGRP1  Group          Set filter, menu option 2
+ RACFGRP2  Group          Add group
+ RACFGRP4  Group          Alter profile
+ RACFGRP5  Group          List userids and access
+ RACFGRP6  Group          Change connection
+ RACFGRP7  Group          Add connection
+ RACFGRP8  Group          List groups and descriptions
+ RACFGRP9  Group          Alter selected group segments
+ RACFMENU  Menu           Main menu
+ RACFMSG   Messages       RACF messages, menu option M
+ RACFMSG1  Message        'Confirm Request' (pop-up panel)
+ RACFMSG2  Message        'RACF Command = Y', 3 lines (pop-up panel)
+ RACFMSG3  Message        'RACF Command = Y', 7 lines (pop-up panel)
+ RACFMSGU  User           / line command prompt (pop-up panel)
+ RACFOMVS  RACFCmds       Exec RACF OMVS cmds (OPERMIT/ORALTER/ORLIST)
+ RACFPPP   Passtype       Word or Phrase Report
+ RACFPRMS  Parameter      RACF parameters, menu option 6
+ RACFPSWD  Password       Reset userid password, opt 5 and line cmd PW
+ RACFPSWE  Password       Reset userid password with expire keyword
+ RACFRINA  Rings          Add new ring
+ RACFRINC  Rings          Add new label to ring
+ RACFRIN1  Rings          List digital rings
+ RACFRIN2  Rings          List digital rings
+ RACFRPTS  Reports        RACF reports, display reports
+ RACFRPTJ  Reports        RACF reports, Job card and JCL parameters
+ RACFSAVE  Save Cmd       Save display to dataset (primary command)
+ RACFSETG  Settings       Settings, customize options, menu option 0
+ RACFSETH  Settings       Define Showmvs dataset to LIBDEF
+ RACFSETI  Settings       Define IBM RACF datasets to ALTLIB/LIBDEF
+ RACFUSRT  User           Add, change and delete a TSO userid
+ RACFUSR1  User           Set filter, menu option 1
+ RACFUSR2  User           List userids (admin/user)
+ RACFUS2A  User           List userids (admin/user) - PW date/interval
+ RACFUSR3  User           Show groups and access
+ RACFUSR4  User           Connect profile
+ RACFUSR5  User           Alter user
+ RACFUS5A  User           Alter selected user segments
+ RACFUSR6  User           Add/Change user
+ RACFUSR7  User           Change connection
+
+ Notes:
+   - Class is 'General Resources'
+   - (admin) = Administrator
+     -- Line cmds: Show, Srch, List, Prof, Chg, Add, Remove, Reset, etc.
+   - (user)  = General user
+     -- Line cmds: Show, Search, List

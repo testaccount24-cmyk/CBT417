@@ -1,0 +1,133 @@
+)ATTR DEFAULT(%+_)
+   _  TYPE(INPUT)   INTENS(HIGH) CAPS(ON)  JUST(LEFT)   HILITE(USCORE)
+   }  TYPE(INPUT)   INTENS(HIGH) CAPS(OFF) JUST(LEFT)   HILITE(USCORE)
+   {  TYPE(TEXT)    INTENS(LOW)  SKIP(ON)  COLOR(BLUE)
+   +  TYPE(TEXT)    INTENS(LOW)  SKIP(ON)  COLOR(GREEN)
+  01  TYPE(DATAOUT) COLOR(RED)
+  02  TYPE(DATAOUT) COLOR(BLUE)
+  03  TYPE(DATAOUT) COLOR(TURQ)  SKIP(ON)  HILITE(USCORE)
+  04  TYPE(DATAOUT) COLOR(WHITE)
+  05  TYPE(DATAOUT) COLOR(GREEN) SKIP(ON)
+  ¬   AREA(DYNAMIC) EXTEND(OFF)
+)BODY EXPAND(\\)
++\-\(%RACFADM - User Profiles+)\-\
+%Command ===>_ZCMD
+%
++Alter RACF%USER+profile: %ALTUSER+command          %F1+- Segment syntax
++
++PROFILE %===>_USER    {
++
+%Select the segments that you want to ALTER:
+_z¬CI      ¬ {SNT identification information (e.g., OPIDENT)
+_z¬DC      ¬ {Associates DCE Principle Identity (e.g., uuid) to RACF Userid
+_z¬DF      ¬ {SMS data management and DASD storage (e.g., MGMTCLAS)
+_z¬EI      ¬ {LDAP profile
+_z¬KE      ¬ {Kerberos user attributes
+_z¬LA      ¬ {Preferred National Language
+_z¬LN      ¬ {Lotus Notes user (e.g., SNAME)
+_z¬ND      ¬ {Map Novell Directory Service user name to RACF Userid
+_z¬NE      ¬ {Application access information
+_z¬OM      ¬ {UNIX user attributes (e.g., UID)
+_z¬OP      ¬ {Extended MCS Console Session attributes (e.g., AUTH)
+_z¬OV      ¬ {Specifies OpenExtensions VM information
+_z¬PR      ¬ {LDAP characteristics (e.g., LDAPHOST)
+_z¬TS      ¬ {TSO UADS logon and authority information (e.g., ACCTNUM)
+_z¬WO      ¬ {APPC User characteristics (e.g., WANAME for SYSOUT)
+)INIT
+  .CURSOR  = USER
+  .HELP    = #RACUSR5
+  &ucics    = ''
+  &udce     = ''
+  &udfp     = ''
+  &ueim     = ''
+  &ukerb    = ''
+  &ulang    = ''
+  &ulnotes  = ''
+  &unds     = ''
+  &unetv    = ''
+  &uomvs    = ''
+  &uoper    = ''
+  &uovm     = ''
+  &uproxy   = ''
+  &utso     = ''
+  &uwork    = ''
+  .zvars   = '(ucics udce udfp ueim ukerb ulang ulnotes +
+               unds unetv uomvs uoper uovm uproxy utso uwork)'
+  *rexx(*)
+    CI = '05'x||'CICS'
+    DC = '05'x||'DCE'
+    DF = '05'x||'DFP'
+    EI = '05'x||'EIM'
+    KE = '05'x||'KERB'
+    LA = '05'x||'LANGUAGE'
+    LN = '05'x||'LNOTES'
+    ND = '05'x||'NDS'
+    NE = '05'x||'NETVIEW'
+    OM = '05'x||'OMVS'
+    OP = '05'x||'OPERPARM'
+    OV = '05'x||'OVM'
+    PR = '05'x||'PROXY'
+    TS = '05'x||'TSO'
+    WO = '05'x||'WORKATTR'
+
+    rxrc=IRRXUTIL("EXTRACT","USER",user,"RACF","")
+    if (word(rxrc,1) <> 0) then
+      exit
+    do i=1 to RACF.0 /* get the segment names */
+      segment=RACF.i
+      select
+        when segment = 'CICS'     then CI  = '03'x||'CICS'||'02'x
+        when segment = 'DCE'      then DC  = '03'x||'DCE'||'02'x
+        when segment = 'DFP'      then DF  = '03'x||'DFP'||'02'x
+        when segment = 'EIM'      then EI  = '03'x||'EIM'||'02'x
+        when segment = 'KERB'     then KE  = '03'x||'KERB'||'02'x
+        when segment = 'LANGUAGE' then LA  = '03'x||'LANGUAGE'||'02'x
+        when segment = 'LNOTES'   then LN  = '03'x||'LNOTES'||'02'x
+        when segment = 'NDS'      then ND  = '03'x||'NDS'||'02'x
+        when segment = 'NETVIEW'  then NE  = '03'x||'NETVIEW'||'02'x
+        when segment = 'OMVS'     then OM  = '03'x||'OMVS'||'02'x
+        when segment = 'OPERPARM' then OP  = '03'x||'OPERPARM'||'02'x
+        when segment = 'OVM'      then OV  = '03'x||'OVM'||'02'x
+        when segment = 'PROXY'    then PR  = '03'x||'PROXY'||'02'x
+        when segment = 'TSO'      then TS  = '03'x||'TSO'||'02'x
+        when segment = 'WORKATTR' then WO  = '03'x||'WORKATTR'||'02'x
+        otherwise nop
+        end
+      end
+  *endrexx
+)REINIT
+  REFRESH(*)
+)PROC
+  VER (&USER,NB,NAME)
+  *rexx(* usegs)
+    usegs = ''
+    if ucics    <> '' then usegs = usegs 'CICS'
+    if udce     <> '' then usegs = usegs 'DCE'
+    if udfp     <> '' then usegs = usegs 'DFP'
+    if ueim     <> '' then usegs = usegs 'EIM'
+    if ukerb    <> '' then usegs = usegs 'KERB'
+    if ulang    <> '' then usegs = usegs 'LANGUAGE'
+    if ulnotes  <> '' then usegs = usegs 'LNOTES'
+    if unds     <> '' then usegs = usegs 'NDS'
+    if unetv    <> '' then usegs = usegs 'NETVIEW'
+    if uomvs    <> '' then usegs = usegs 'OMVS'
+    if uoper    <> '' then usegs = usegs 'OPERPARM'
+    if uovm     <> '' then usegs = usegs 'OVM'
+    if uproxy   <> '' then usegs = usegs 'PROXY'
+    if utso     <> '' then usegs = usegs 'TSO'
+    if uwork    <> '' then usegs = usegs 'WORKATTR'
+  *endrexx
+)END
+/*--------------------------------------------------------------------*/
+/*                             Comments                               */
+/*--------------------------------------------------------------------*/
+/*                                                                    */
+/*  1) To display/use this panel, the user must have the Settings     */
+/*     (menu option 0) turned on:                                     */
+/*       Administrator ..... Y                                        */
+/*       Admin RACF API .... Y                                        */
+/*                                                                    */
+/*  2) Descriptive text from Robert S. Hansel                         */
+/*     https://www.rshconsulting.com/                                 */
+/*                                                                    */
+/*--------------------------------------------------------------------*/

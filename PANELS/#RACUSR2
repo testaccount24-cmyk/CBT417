@@ -1,0 +1,50 @@
+)ATTR DEFAULT(%+_)
+   _  TYPE(INPUT)   INTENS(HIGH) CAPS(ON) JUST(LEFT)   HILITE(USCORE)
+   !  TYPE(TEXT)    INTENS(LOW)  SKIP(ON) COLOR(TURQ)
+   @  TYPE(TEXT)    INTENS(LOW)  SKIP(ON) COLOR(RED)
+   +  TYPE(TEXT)    INTENS(LOW)  SKIP(ON) COLOR(GREEN)
+   ¬ area(SCRL) Extend(ON)
+)BODY EXPAND(\\)
+%Tutorial+\-\(%RACFADM - User Profiles+)\-\%Tutorial
+%Command ===>_ZCMD                                         a
+¬Linec -------------------------------------------------------------------¬
+)Area Linec
++Panel Legend
+%  ATTributes+(S=Special, O=Operations, A=Auditor)  %REVoked+(Y=Yes, N=No)
+%  TSO+(Y=Yes, N=No)  *=User Digital Certificate
+%
++Primary Commands
+%  Find text        +Find a text string
+%  Sort column A/D  +Sort column, ascending/descending, columns are PAS
+%  Locate text      +Locate text in the sorted column
+%  Only text        +Only display rows with text string
+%  Reset text       +Redisplay rows and pass a new search filter (optional)
+%  SAve             +Save display to a dataset
+%  Next             +Cycle between normal and alternate list user display
+%  CERTS            +List Digital cert information for users in table
+%  RINGS            +List Digital ring information for users in table
+%
++Line Commands
+%  /  !             +Display line command prompt panel (pop-up)
+%  S  !Show         +List of groups user is connected to
+%  SE !Search       +Analyze user access to general resource profiles
+%  L  !List         +Issue LISTUSER command
+%  P  !Profile      +List user profile using IRRXUTIL@(admin RACF API)
+%  D  !Dsn          +Display datasets
+%  C  !Change       +Change user attributes@(admin)
+%  A  !Add          +Define a new user@(admin)
+%  PW !Password     +Password reset@(admin)
+%  R  !Remove       +Remove user from RACF@(admin)
+%  RS !Resume       +Resume user@(admin)
+%  RV !Revoke       +Revoke the user@(admin)
+%  AL !Alter        +Alter user profile segments@(admin)
+%  M  !Modify       +Modify selected user profile segments@(admin RACF API)
+%  X  !Xref         +Create JCL for Cross Reference Report@(admin)
+%  Y  !Access       +User/Grp Access Report@(admin)
+%  LC !Cert         +List certificates for user
+%  LR !Ring         +List rings for user
+%  K  !Clone        +Clone user profile using IRRXUTIL@(admin RACF API)
+%  CK !CkPW         +Check the days until the password changes
+)PROC
+  &ZUP     = #RACUSR2
+)END

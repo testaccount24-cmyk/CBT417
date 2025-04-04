@@ -1,0 +1,33 @@
+)ATTR DEFAULT(%+~)
+   ~  TYPE(INPUT)   INTENS(HIGH) CAPS(ON) JUST(LEFT)   HILITE(USCORE)
+   !  TYPE(TEXT)    INTENS(LOW)  SKIP(ON) COLOR(TURQ)
+   @  TYPE(TEXT)    INTENS(LOW)  SKIP(ON) COLOR(RED)
+   +  TYPE(TEXT)    INTENS(LOW)  SKIP(ON) COLOR(GREEN)
+)BODY EXPAND(\\)
+%Tutorial+\-\(%RACFADM - Publications - 1 of 2+)\-\%Tutorial
+%Command ===>~ZCMD
++
++  Below are websites to%RACF publications and downloads,+cut and paste
++  the URL into a browser.
++
+!    z/OS 3.1 Publications
+@      https://www.ibm.com/docs/en/zos/
+@           3.1.0?topic=documentation-pdf-files-zos-310-library
++
+!    z/OS 3.1 Security Server RACF
+@      https://www.ibm.com/docs/en/zos/
+@           3.1.0?topic=zos-security-server-racf
++
+!    Security on z/OS, IBM
+@      https://www.ibm.com/docs/en/zos-basic-skills?topic=security-zos
++
+!    z/OS GitHub RACF Download Collection
+@      https://github.com/IBM/IBM-Z-zOS/tree/master/zOS-RACF/Downloads
++
++
++
++ \ \ (press%ENTER+to continue) \ \
+)PROC
+  &ZUP     = #RACPUB1
+  &ZCONT   = #RACPUB2
+)END
