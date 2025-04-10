@@ -1,0 +1,79 @@
+)ATTR DEFAULT(%+_)
+   ¨  TYPE(OUTPUT)  INTENS(LOW)  SKIP(ON)   COLOR(&CLRPROF)
+   Ý  TYPE(OUTPUT)  INTENS(LOW)  SKIP(ON)   COLOR(&CLRDATA)
+   @  TYPE(OUTPUT)  INTENS(LOW)  SKIP(ON)
+   $  TYPE(OUTPUT)  INTENS(LOW)  JUST(LEFT) COLOR(TURQ)
+   #  TYPE(OUTPUT)  INTENS(LOW)  JUST(LEFT) COLOR(GREEN)
+   _  TYPE(INPUT)   INTENS(HIGH) JUST(LEFT) CAPS(ON)      HILITE(USCORE)
+   +  TYPE(TEXT)    INTENS(LOW)  SKIP(ON)   COLOR(GREEN)
+   ^  AREA(DYNAMIC) EXTEND(OFF)
+   ]  TYPE(DATAOUT) INTENS(LOW)  COLOR(GREEN)
+   [  TYPE(DATAOUT) INTENS(HIGH)
+   ~  TYPE(PS)
+)BODY EXPAND(\\)
++\-\(%RACFADM - General Resources+)\-\
+%Command ===>_ZCMD                                              +Scroll==>_SAMT+
+%
++CLASS:  $RCLASS
++FILTER: $RFILTER
++SELECT: ^SELCMDS                                                              ^
+%
+%S ~Profile
+%-------------------------------------------------------------------------------
+)MODEL CLEAR(OPTA)
+_Z+¨Z                                                                        @Z
+)INIT
+  .ZVARS   = '(OPTA PROFILE SCIND)'
+  .HELP    = #RACCLS2
+  &ZCMD    = ' '
+  IF (&SAMT = ' ')
+      &SAMT = &ZSCED
+)PROC
+  &SROW = &Z
+  IF (&ZCMD = &Z)
+     IF (&ZTDSELS = 0)
+        &SROW = .CSRROW
+        IF (&SROW ¬= 0)
+           &OPTA = S
+
+  IF (&SETMADMN = YES)
+     IF (&SETMIRRX = YES)
+        VER (&OPTA,LIST,S,L,O,P,C,A,R,M)
+     ELSE
+        VER (&OPTA,LIST,S,L,O,C,A,R,M)
+  ELSE
+     IF (&SETMIRRX = YES)
+        VER (&OPTA,LIST,S,L,O,,P)
+     ELSE
+        VER (&OPTA,LIST,S,L,O)
+)PNTS
+  FIELD(ZPS00001) VAR(ZCMD) VAL('SORT PROFILE')
+)FIELD
+  FIELD(PROFILE) IND(SCIND,'<>') LEN(246)
+)END
+/*--------------------------------------------------------------------*/
+/*                             Comments                               */
+/*--------------------------------------------------------------------*/
+/*                                                                    */
+/*  1) The 'SELECT' field is a dynamic field, allowing the REXX       */
+/*     program to display only the commands accessable/useable        */
+/*     depending on the below users Settings (menu option 0):         */
+/*       Administrator ..... Y or N                                   */
+/*       Admin RACF API .... Y or N                                   */
+/*                                                                    */
+/*  2) In the )PROC section there is code (&SROW) to determine if     */
+/*     the user tabbed down to a row and pressed ENTER to select      */
+/*     an entry                                                       */
+/*                                                                    */
+/*  3) The column headers are point-n-shoot fields to sort the data   */
+/*     in ascending or descending order                               */
+/*                                                                    */
+/*  4) The 'DATA' field is a scrollable field                         */
+/*                                                                    */
+/*  5) The RLIST command might provide unpredictable results          */
+/*     when searching on the DIGTCERT and DIGTRING classes.           */
+/*     Due to the lowercase characters in these classes, the          */
+/*     profile filter on the RLIST command might not function         */
+/*     correctly.                                                     */
+/*                                                                    */
+/*--------------------------------------------------------------------*/

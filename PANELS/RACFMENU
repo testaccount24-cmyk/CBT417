@@ -1,0 +1,458 @@
+)ATTR DEFAULT(%+_)
+   !  TYPE(OUTPUT)  INTENS(HIGH) CAPS(OFF) SKIP(ON)     COLOR(TURQ)
+   _  TYPE(INPUT)   INTENS(HIGH) CAPS(ON)  JUST(LEFT)   HILITE(USCORE)
+   +  TYPE(TEXT)    INTENS(LOW)  SKIP(ON)  COLOR(GREEN)
+   @  TYPE(OUTPUT)  INTENS(LOW)  CAPS(OFF) COLOR(WHITE)
+   Ý  TYPE(OUTPUT)  INTENS(High) CAPS(ON) COLOR(WHITE)
+   [  TYPE(OUTPUT)  INTENS(LOW)  CAPS(OFF) COLOR(GREEN)
+   {  TYPE(OUTPUT)  PAS(ON)      CAPS(OFF)
+   ¨ area(SCRL) Extend(ON)
+   ~  TYPE(PS)
+)BODY EXPAND(\\)
++\-\(%RACFADM - RACF Administration -Ýrver +)\-\
+%Option ===>_ZCMD                                                              +
+¨sam --------------------------------------------------------------------------¨
+)Area Sam
++  @z {m0desc   +Customize options      @z {mcdesc    +Execute RACF commands
++  @z {m1desc   +User profiles          @z {mddesc    +Dataset list
++  @z {m2desc   +Group profiles         @z {medesc    +Dataset enqueues
++  @z {m3desc   +Dataset profiles       @z {mgdesc    +Generate profile source
++  @z {m4desc   +General resources      @z {mhdesc    +RACF help commands
++  @z {m5desc   +Password reset         @z {mldesc    +ISPF log file
++  @z {m6desc   +Group tree report      @z {mmdesc    +RACF messages
++  @z {OPT1DESC [OPT1INFO               @z {modesc    +OMVS RACF commands
++  @z {OPT2DESC [OPT2INFO               @z {mpdesc    [MPINFO
++  @z {OPT3DESC [OPT3INFO               @z {mrdesc    +RACF reports
++  @z {OPT4DESC [OPT4INFO               @z {msdesc    +Coding/design
++  @z {OPT5DESC [OPT5INFO               @z {mudesc    +Version/updates
++  @z {OPT6DESC [OPT6INFO               @z {mcadesc   +Digital certificates
++                                       @z {mtdesc    [mthelp
++ ---------------------------------------------------------------------------
++   RACF:!RACFVER        +PrmDB:!PRMDBASE
++   FMID:!RACFFMID       +BkpDB:!BKPDBASE
++   z/OS:!ZOSVER         +Plex: !ZSYSPLEX       +Lpar:!ZSYSID
++   Date:!RDATE          +JDate:!ZJDATE         +Time:!ZTIME
++  [z    !ZUSER    @UATT +Group:!RACFGRP        +Name:!RACFNAM
++ ---------------------------------------------------------------------------
+)INIT
+  .CURSOR = ZCMD
+  .HELP   = #RACMENU
+  .zvars  = '(m0 mc m1 md m2 me m3 mg m4 mh m5 ml m6 mm +
+             opt1 mo opt2 mp opt3 mr opt4 ms opt5 mu opt6 mca mt utype )'
+  &m0 = '0'
+  &m0desc = 'Settings'
+  &mc = 'C'
+  &mcdesc = 'Command'
+  &m1 = '1'
+  &m1desc = 'User'
+  &md = 'D'
+  &mddesc = 'DSList'
+  &m2 = '2'
+  &m2desc = 'Group'
+  &me = 'E'
+  &medesc = 'Enqueues'
+  &m3 = '3'
+  &m3desc = 'Dataset'
+  &mh = 'H'
+  &mhdesc = 'Help'
+  &m4 = '4'
+  &m4desc = 'General'
+  &ml = 'L'
+  &mldesc = 'ISPLog'
+  &m5 = '5'
+  &m5desc = 'Password'
+  &mm = 'M'
+  &mmdesc = 'Messages'
+  &m6 = '6'
+  &m6desc = 'GrpTree'
+  &mo = 'O'
+  &modesc = 'OMVSCmds'
+  &mp = 'P'
+  &mpdesc = 'PassType'
+  &mpinfo = 'Word or Phrase Report'
+  &mpcmd  = 'CMD(%RACFPWPH)'
+  &mr = 'R'
+  &mrdesc = 'Reports'
+  &ms = 'S'
+  &msdesc = 'Standards'
+
+  &mt = 'T'                  /*    Tutorial entry      */
+  &mtdesc = 'Tutorial'       /*         "              */
+  &mthelp = 'Help'           /*         "              */
+  &mt = ' '                  /*      Nullify           */
+  &mtdesc = '        '       /*         "              */
+  &mthelp = '    '           /*         "              */
+
+  &mg = 'G'
+  &mgdesc = 'Generate'
+  &mu = 'U'
+  &mudesc = 'Updates'
+  &mca = 'CA'
+  &mcadesc = 'CertAuth'
+  &ZPRIM  = YES              /* Make a primary option menu */
+
+  VGET (SETGSTA  SETGSTAP SETGDISP SETGCONF SETGMVS SETGMVSD SETGPREF +
+        SETMADMN SETMIRRX SETMIBMM SETMIBMD SETMSHOW SETMTRAC +
+        SETMPHRA) PROFILE
+
+  /* Settings - General - Defaults */
+  IF (&SETGSTA  = &Z & &SETGSTAP = &Z)
+      &SETGSTA  = '100'      /* Status interval (#) = 100  */
+      &SETGSTAP = &Z         /* Status interval (%) =      */
+  IF (&SETGDISP NE BROWSE, EDIT, VIEW)
+      &SETGDISP = 'VIEW'     /* Display files       = VIEW */
+  IF (&SETGCONF NE YES, NO)
+      &SETGCONF = 'YES'      /* Confirm panel       = YES  */
+  IF (&SETGMVS NE YES, NO)
+      &SETGMVS = 'YES'       /* Showmvs             = YES  */
+  IF (&SETGMVSD NE YES, NO)
+      &SETGMVSD = 'NO'       /* Showmvs dataset     = NO   */
+  IF (&SETGPREF NE YES, NO)
+      &SETGPREF = 'NO'       /* Prefix Dsname       = NO   */
+
+  /* Settings - Management - Defaults */
+  IF (&SETMADMN NE YES, NO)
+      &SETMADMN = 'NO'       /* Administrator       = NO   */
+  IF (&SETMIRRX NE YES, NO)
+      &SETMIRRX = 'NO'       /* RACF API (IRRXUTIL) = NO   */
+  IF (&SETMIBMM NE YES, NO)
+      &SETMIBMM = 'NO'       /* RACF Menu opts 6/7/8       */
+  IF (&SETMIBMD NE YES, NO)
+      &SETMIBMD = 'NO'       /* RACF LIBEDEF/ALTLIB DSNs   */
+  IF (&SETMSHOW NE DISPLAY, LOG, BOTH, NO)
+      &SETMSHOW = 'NO'       /* RACF commands       = NO   */
+  IF (&SETMTRAC NE LABELS, PROGRAMS, RESULTS, NO)
+      &SETMTRAC = 'NO'       /* REXX trace          = NO   */
+  IF (&SETMPHRA NE YES, NO)
+      &SETMPHRA = 'NO'       /* Passphrases                */
+
+  VPUT (SETGSTA  SETGSTAP SETGDISP SETGCONF SETGMVS  SETGMVSD SETGPREF +
+        SETMADMN SETMIRRX SETMIBMM SETMIBMD SETMSHOW SETMTRAC +
+        SETMPHRA) PROFILE
+
+  /* Obtain RACF/system info displayed at the bottom of panel */
+  &RACFVER  = &Z
+  &PRMDBASE = &Z
+  &BKPDBASE = &Z
+  &RACFGRP  = &Z
+  &RACFNAM  = &Z
+  &ZOSVER   = &ZOS390RL
+  &RACFLMSG = &Z
+  &SECSOFT  = &Z
+  &RACFFMID = &Z
+  &RDATE    = &Z
+  &UATT     = &Z
+  &UTYPE    = 'User'
+
+  VGET (RACFMENU)                     /* No. of times menu displayed */
+  if (&RACFMENU = &Z)
+     &RACFMENU = 0
+
+  *REXX (RACFVER PRMDBASE BKPDBASE ZOSVER RACFGRP  RACFNAM RACFLMSG
+         SECSOFT RACFFMID RDATE UTYPE SETMADMN UATT RACFMENU
+         SETMPHRA rver setmirrx mp mpdesc mpinfo mpcmd)
+    rver = racfrver()
+    Numeric Digits 10
+    CVT      = C2D(STORAGE(10,4))               /* Get RACF FMID     */
+    RACFFMID = "HRF"STORAGE(D2X(CVT - 29),4)
+    x         = storage(d2x(cvt - 38),5)
+    racfver   = 'V'substr(x,3,1)'R'substr(x,5,1)
+    cvt      = c2x(storage(10,4))               /* Get Sec. Software */
+    cvtrac   = C2x(storage((d2x(x2d(cvt)+992)),4))
+    ESM      = storage(d2x(x2d(cvtrac)),4)
+    Select
+       When (ESM = "RTSS") Then SECSOFT = "TSS"
+       When (ESM = "RCVT") Then SECSOFT = "RACF"
+       When (ESM = "ACF2") Then SECSOFT = "ACF2"
+       Otherwise                SECSOFT = "????"
+    End
+    IF (SECSOFT <> "RACF") THEN
+       RACFLMSG = "RACF is 'NOT' installed on this lpar,",
+                  "it is running "SECSOFT
+    rcvtstat$ = d2x((x2d(cvtrac))+616)
+    rcvtsta$  = d2x((x2d(cvtrac))+56)           /* Get Primary Dbase */
+    PRMDBASE  = strip(storage(rcvtsta$,44))
+    RCVT      = D2X(X2D(CVT) +X2D(3E0))         /* Get Backup  Dbase */
+    RCVT      = C2X(STORAGE(RCVT,4))
+    DSDT      = D2X(X2D(RCVT) + X2D(E0))
+    DSDT      = C2X(STORAGE(DSDT,4))
+    DSDTBACK  = D2X(X2D(DSDT) + X2D(140))
+    BNAME     = D2X(X2D(DSDTBACK) + X2D(21))
+    BKPDBASE  = STRIP(STORAGE(BNAME,44))
+    if pos(left(bkpdbase,1),'ABCDEFGHIJKLMNOPQRSTUVWXYZ@#$') = 0
+       then bkpdbase = ''
+    if (BKPDBASE = "") THEN
+        BKPDBASE = "N/A"
+    parse var zosver . "z/OS" ZOSVER .          /* Get z/OS version  */
+    ascb      = c2x(storage(224,4))     /* PSAAOLD  (My ASCB)        */
+    asxb$     = d2x((x2d(ascb))+108)    /* ASCB + 108                */
+    asxb      = c2x(storage(asxb$,4))   /* ASCBASXB (My ASXB)        */
+    acee$     = d2x((x2d(asxb))+200)    /* ASXB + 200                */
+    acee      = c2x(storage(acee$,4))   /* ASXBSENV (My ACEE)        */
+    group$    = d2x((x2d(acee))+30)     /* ACEE + 30                 */
+    name$     = d2x((x2d(acee))+100)    /* ACEE + 100                */
+    name$     = c2x(storage(name$,4))   /* ACEEUNAM Ptr              */
+    name$     = d2x((x2d(name$))+1)     /* ACEEUNAM Ptr +1           */
+    RACFGRP   = storage(group$,8)       /* ACEEGRPN (RACF group name)*/
+    RACFNAM   = storage(name$,20)       /* ACEEUNAM (RACF user name) */
+    sep       = racfdsep()
+    RDATE     = DATE('S')
+    rdate     = left(rdate,4)||sep||substr(rdate,5,2)||sep||right(rdate,2)
+
+    if (setmadmn = 'YES') then          /* Display User or Admn?     */
+       utype = 'Admn:'
+    else
+       utype = 'User:'
+
+    RACFMENU = RACFMENU + 1           /* No. of times menu displayed */
+    Access   = ""
+    user     = userid()                 /* Does user have necessary  */
+    x        = outtrap('lu.')           /* access to display profiles*/
+    'LISTUSER 'user                     /* and general resources?    */
+    x        = outtrap('off')
+    uatt     = ''
+    lu34 = substr(lu.3,2+11)||substr(lu.4,2+11)
+    if (pos('AUDITOR',lu34) > 0) then do
+       uatt   = uatt'A'
+       access = access'A'
+    end
+    if (pos('OPERATIONS',lu34) > 0) then
+       uatt   = uatt'O'
+    if (pos('ROAUDIT',lu34) > 0) then do
+       uatt   = uatt'R'
+       access = access'A'
+    end
+    if (pos('SPECIAL',lu34) > 0) then do
+       uatt     = uatt'S'
+       access   = access'A'
+       setmadmn = 'YES'         /* Make Administrator */
+       utype    = 'Admn:'
+    end
+    if (RACFLMSG = "") & (ACCESS = "") THEN DO
+       RACFLMSG = "Userid ("user") has limited access",
+                  "to display/view entries, due to it",
+                  "does NOT have the attribute AUDITOR,",
+                  "ROAUDIT or SPECIAL."
+    end
+
+    if racfmenu = 1 then do
+      x = outtrap('var.')
+      "PARMLIB LIST(LOGON)"
+      x = outtrap('off')
+      Do i = 1 to var.0
+         parse var var.i 'PASSPHRASE(' pphrase ')'
+         if (pphrase = 'ON') | (pphrase = 'OFF') then leave
+      end
+      if (SETMPHRA = "YES") & (pphrase <> "ON") THEN
+        RACFLMSG = "PASSPHRASE(OFF) in PARMLIB member IKJTSOxx",
+                   "conflicts with Passphrase value in Settings"
+    end
+    if setmirrx /= 'YES' then do
+       parse value '' with mp mpdesc mpinfo
+       mpcmd = 'PGM(IEFBR14)'
+       end
+    x = outtrap('var.')
+    "PROFILE"
+    x = outtrap('off')
+    if wordpos('NOMSGID',var.1) > 0 then
+      RACFLMSG = "PROFILE NOMSGID will not show ICH error messages"
+  *ENDREXX
+  VPUT (RACFMENU)                     /* No. of times menu displayed */
+  VPUT (SETMADMN) PROFILE             /* Update SETMADMN in profile  */
+
+  IF (&RACFMENU = 1 & &RACFLMSG NE "")     /* Display long message?  */
+     .MSG  = RACF011
+
+  IF (&SETGMVS EQ YES)                     /* Add menu options when  */
+     &OPT1     = 7                         /* Settings (Opt 0) has   */
+     &OPT2     = 8                         /* 'Showmvs data = Y'     */
+     &OPT3     = 9
+     &OPT1DESC = RACFData
+     &OPT2DESC = RACFDB
+     &OPT3DESC = RACFPrms
+     &OPT1INFO = 'RACF data (Showmvs)'
+     &OPT2INFO = 'RACF databases'
+     &OPT3INFO = 'RACF parameters'
+     &OPT1CMD  = 'CMD(%RACFMVS)'
+     &OPT2CMD  = 'CMD(%RACFDB)'
+     &OPT3CMD  = 'CMD(%RACFPRMS)'
+  IF (&SETGMVS EQ NO)                      /* Add menu options when  */
+     &OPT1     = 7                         /* Settings (Opt 0) has   */
+     &OPT2     = 8                         /* 'Showmvs data = N'     */
+     &OPT3     = &Z
+     &OPT1DESC = RACFDB
+     &OPT2DESC = RACFPrms
+     &OPT3DESC = &Z
+     &OPT1INFO = 'RACF databases'
+     &OPT2INFO = 'RACF parameters'
+     &OPT3INFO = &Z
+     &OPT1CMD  = 'CMD(%RACFDB)'
+     &OPT2CMD  = 'CMD(%RACFPRMS)'
+     &OPT3CMD  = &Z
+  IF (&SETMIBMM EQ YES & &SETGMVS = YES)   /* Add menu options when  */
+     &OPT4     = 10                        /* Settings (Opt 0) has   */
+     &OPT5     = 11                        /* 'Showmvs data  = Y'    */
+     &OPT6     = 12                        /* 'IBM RACF data = Y'    */
+     &OPT4DESC = IBMSys
+     &OPT5DESC = IBMRRSF
+     &OPT6DESC = IBMCert
+     &OPT4INFO = 'RACF system options'
+     &OPT5INFO = 'RACF remote services'
+     &OPT6INFO = 'RACF certificates'
+     &OPT4CMD  = 'cmd(%racfIBM 5)'
+     &OPT5CMD  = 'cmd(%racfIBM 6)'
+     &OPT6CMD  = 'cmd(%racfIBM 7)'
+  IF (&SETMIBMM EQ YES & &SETGMVS = NO)    /* Add menu options when  */
+     &OPT3     = 9                         /* Settings (Opt 0) has   */
+     &OPT4     = 10                        /* 'Showmvs data  = N'    */
+     &OPT5     = 11                        /* 'IBM RACF data = Y'    */
+     &OPT6     = &Z
+     &OPT3DESC = IBMSys
+     &OPT4DESC = IBMRRSF
+     &OPT5DESC = IBMCert
+     &OPT6DESC = &Z
+     &OPT3INFO = 'RACF system options'
+     &OPT4INFO = 'RACF remote services'
+     &OPT5INFO = 'RACF certificates'
+     &OPT6INFO = &Z
+     &OPT3CMD  = 'cmd(%racfIBM 5)'
+     &OPT4CMD  = 'cmd(%racfIBM 6)'
+     &OPT5CMD  = 'cmd(%racfIBM 7)'
+     &OPT6CMD  = &Z
+  IF (&SETMIBMM NE YES)                    /* When Settings (Opt 0)  */
+     &OPT4     = &z                        /* is 'IBM RACF data = N' */
+     &OPT5     = &z
+     &OPT6     = &z
+     &OPT4DESC = &z
+     &OPT5DESC = &z
+     &OPT6DESC = &z
+     &OPT4INFO = &z
+     &OPT5INFO = &z
+     &OPT6INFO = &z
+     &OPT4CMD  = &z
+     &OPT5CMD  = &z
+     &OPT6CMD  = &z
+
+  IF (&RACFMENU = 1 & &OPT NE &Z)    /* If invoked passing a menu   */
+     &NOMENU = Y                     /* option, invoke the option   */
+  IF (&RACFMENU = 1 & &OPT = &Z)     /* and F3(END) out of RACFADM  */
+     &NOMENU = N
+  IF (&RACFMENU > 1  & &NOMENU = Y)
+     &ZCMD = X
+     .RESP = END
+)PROC
+  &NEWZCMD=TRUNC(&ZCMD,' ')
+  &OPERAND=.TRAIL
+  &ZSEL=TRANS(TRUNC(&NEWZCMD,'.')
+      0,'CMD(%RACFSETG)'
+      1,'CMD(%RACFUSR)'
+      2,'CMD(%RACFGRP)'
+      3,'CMD(%RACFDSN)'
+      4,'CMD(%RACFCLSR)'
+      5,'CMD(%RACFPSWD)'
+      6,'CMD(%RACFGTRE)'
+    &OPT1,&OPT1CMD
+    &OPT2,&OPT2CMD
+    &OPT3,&OPT3CMD
+    &OPT4,&OPT4CMD
+    &OPT5,&OPT5CMD
+    &OPT6,&OPT6CMD
+     99,'CMD(%RACFCLSA)'        /* Analyze - Verify ACL */  /* Hidden */
+      B,'CMD(%BOOKMGR SHELF(''EOYBOOK.ICHZBKC0.BKSHELF''))' /* Hidden */
+      C,'CMD(%RACFCMDS)'
+     CA,'CMD(%RACFCERT)'
+      D,'CMD(%RACFDSL)'
+      E,'CMD(%RACFENQS)'
+      G,'CMD(%RACFGEN)'
+      H,'CMD(%RACFHELP)'
+ /*   I,'CMD(%RACFLOG $ISSUES)'    Known issues (PMRs)         Hidden */
+      L,'CMD(%RACFLOG ISPLOG &OPERAND)' /* R to reverse LOG date order*/
+      M,'CMD(%RACFMSG)'
+      O,'CMD(%RACFOMVS)'
+      P,&mpcmd
+      R,'CMD(%RACFRPTS)'
+      S,'CMD(%RACFLOG $STNDARD)'
+      T,'PGM(ISPTUTOR) PARM(#RACMENU)'
+      U,'CMD(%RACFLOG $UPDATES)'
+      X,'EXIT'
+    ' ',' '
+      *,'?')
+)PNTS
+  FIELD(m0desc  ) VAR(ZCMD) VAL('0')
+  FIELD(mcdesac ) VAR(ZCMD) VAL('C')
+  FIELD(m1desc  ) VAR(ZCMD) VAL('1')
+  FIELD(mddesc  ) VAR(ZCMD) VAL('D')
+  FIELD(m2desc  ) VAR(ZCMD) VAL('2')
+  FIELD(medesc  ) VAR(ZCMD) VAL('E')
+  FIELD(m3desc  ) VAR(ZCMD) VAL('3')
+  FIELD(mhdesc  ) VAR(ZCMD) VAL('H')
+  FIELD(m4desc  ) VAR(ZCMD) VAL('4')
+  FIELD(mldesc  ) VAR(ZCMD) VAL('L')
+  FIELD(m5desc  ) VAR(ZCMD) VAL('5')
+  FIELD(mmdesc  ) VAR(ZCMD) VAL('M')
+  FIELD(m6desc  ) VAR(ZCMD) VAL('6')
+  FIELD(modesc  ) VAR(ZCMD) VAL('O')
+  FIELD(OPT1DESC) VAR(ZCMD) VAL('7')
+  FIELD(mpdesc  ) VAR(ZCMD) VAL('P')
+  FIELD(OPT2DESC) VAR(ZCMD) VAL('8')
+  FIELD(mrdesc  ) VAR(ZCMD) VAL('R')
+  FIELD(OPT3DESC) VAR(ZCMD) VAL('9')
+  FIELD(msdesc  ) VAR(ZCMD) VAL('S')
+  FIELD(OPT4DESC) VAR(ZCMD) VAL('10')
+  FIELD(mgdesc  ) VAR(ZCMD) VAL('G')
+  FIELD(OPT5DESC) VAR(ZCMD) VAL('11')
+  FIELD(mudesc  ) VAR(ZCMD) VAL('U')
+  FIELD(OPT6DESC) VAR(ZCMD) VAL('12')
+  FIELD(mcadesc ) VAR(ZCMD) VAL('CA')
+  FIELD(mtdesc  ) VAR(ZCMD) VAL('T')
+)END
+/*--------------------------------------------------------------------*/
+/*                             Comments                               */
+/*--------------------------------------------------------------------*/
+/*                                                                    */
+/*  1) This panel is defined as a primary menu, allowing the          */
+/*     capability to type in =1, =2, =n to jump around from one       */
+/*     panel to another                                               */
+/*                                                                    */
+/*  2) The )INIT section executes a REXX code to:                     */
+/*     - Obtain RACF information displayed at the bottom of panel     */
+/*       (RACF, Dbase, z/OS, etc)                                     */
+/*     - Verify RACF is executing, if not issue message               */
+/*                                                                    */
+/*  3) The default Settings, menu option 0, are defined in the        */
+/*     )INIT section of this panel and the naming standards for       */
+/*     the these variables are:                                       */
+/*     - Syntax                                                       */
+/*         SET#????                                                   */
+/*     - Where                                                        */
+/*         SET .... Settings (option 0)                               */
+/*         # ...... G=General, M=Management, T=Adding TSO Userid      */
+/*                  P=Program/Panel (Load, REXX or CLIST member),     */
+/*                  D=Dataset, J=JCL and R=Refresh                    */
+/*          ???? ... Field name, any characters and for Refresh       */
+/*                   variables (4th chr = R) the section name         */
+/*                   (GEN, MGT, TSO, MVS, IBM, RPT and MSG)           */
+/*     - The REXX programs and panels will translate the abbreviated  */
+/*       contents to its full word, in hopes of making it easier to   */
+/*       understand/maintain the code, for example: Y, will be        */
+/*       translated to YES                                            */
+/*                                                                    */
+/*  4) The following are the menu entry standards:                    */
+/*     - Numbered entries (1-99) are designated for obtaining,        */
+/*       displaying and changing the RACF database (Userids,          */
+/*       Groups, etc.) and customizing the utility (Settings)         */
+/*     - Alphabetic entries (A-Z) are used to assist in maintaining   */
+/*       or documenting RACFADM                                       */
+/*                                                                    */
+/*  5) Below hidden menu options (not displayed):                     */
+/*       99  Analyze   Verify ACL                                     */
+/*        I  Issues    Known problems                                 */
+/*        B  BookMgr   RACF manuals                                   */
+/*                                                                    */
+/*  6) The menu entries (Settings, User, etc.) are point-n-shoot      */
+/*     fields                                                         */
+/*                                                                    */
+/*  7) Can pass a menu option as a parameter                          */
+/*     - It will select the menu option and exit out of RACFADM       */
+/*                                                                    */
+/*--------------------------------------------------------------------*/
